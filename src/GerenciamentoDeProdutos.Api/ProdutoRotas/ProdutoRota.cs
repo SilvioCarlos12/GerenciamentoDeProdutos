@@ -16,6 +16,7 @@ namespace GerenciamentoDeProdutos.Api.ProdutoRotas
              .MapCriarProduto()
              .MapDeletarProduto()
              .MapAtualizarProduto()
+             .MapObterProdutos()
              .MapObterProduto();
 
         private static WebApplication MapCriarProduto(this WebApplication app)
@@ -47,6 +48,31 @@ namespace GerenciamentoDeProdutos.Api.ProdutoRotas
                 .Produces(400)
                 .Produces(500)
                 .WithMetadata(new SwaggerOperationAttribute("Criar Produto", "Cria um produto"))
+                .WithTags("Produto");
+
+            return app;
+        }
+
+        private static WebApplication MapObterProdutos(this WebApplication app)
+        {
+            app.MapGet(_rotaRaizProduto,
+                async ([FromServices] IProdutoServico produtoServico, [AsParameters]ProdutoDto produtoDto, CancellationToken cancellationToken) =>
+                {
+                    try
+                    {
+                        return Results.Ok(await produtoServico.ObterProdutosPorFiltros(produtoDto, cancellationToken));
+                    }
+                    catch (Exception ex)
+                    {
+                        return Results.Problem(ex.Message);
+                    }
+
+
+                })
+                .Produces(200,typeof(List<ProdutoDto>))
+                .Produces(400)
+                .Produces(500)
+                .WithMetadata(new SwaggerOperationAttribute("Obtem varios Produtos", "Obtem produtos por filtro"))
                 .WithTags("Produto");
 
             return app;
