@@ -36,7 +36,7 @@ namespace GerenciamentoDeProdutos.Infra
 
         public async Task<Produto> ObterProdutoPorId(Guid id, CancellationToken cancellationToken)
         {
-            return await _context.Produto.SingleAsync(x => x.Id.Equals(id), cancellationToken);
+            return await _context.Produto.SingleAsync(x => x.ProdutoId.Equals(id), cancellationToken);
         }
 
         public async Task RemoverProduto(Produto produto, CancellationToken cancellationToken)
