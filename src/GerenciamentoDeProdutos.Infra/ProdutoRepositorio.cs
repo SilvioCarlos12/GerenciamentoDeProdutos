@@ -1,6 +1,7 @@
 ﻿using GerenciamentoDeProdutos.Dominio;
 using GerenciamentoDeProdutos.Infra.Contexto;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace GerenciamentoDeProdutos.Infra
 {
@@ -26,6 +27,11 @@ namespace GerenciamentoDeProdutos.Infra
             _context.Produto.Update(produto);
 
             await _context.SaveChangesAsync(cancellationToken);
+        }
+
+        public async Task<List<Produto>> ObterProdutoPorFiltro(Expression<Func<Produto, bool>> filter, CancellationToken cancellationToken)
+        {
+            return await _context.Produto.AsNoTracking().Where(filter).ToListAsync(cancellationToken);
         }
 
         public async Task<Produto> ObterProdutoPorId(Guid id, CancellationToken cancellationToken)
