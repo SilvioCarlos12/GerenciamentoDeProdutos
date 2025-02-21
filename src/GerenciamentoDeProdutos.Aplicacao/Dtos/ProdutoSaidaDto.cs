@@ -1,23 +1,12 @@
 ﻿using GerenciamentoDeProdutos.Dominio;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GerenciamentoDeProdutos.Aplicacao.Dtos
 {
     public sealed record ProdutoSaidaDto(Guid Id, string Name, decimal? Price, int? StockQuantity) : ProdutoDto(Name, Price, StockQuantity)
     {
-        public override Produto ToEntidade()
+        public static ProdutoSaidaDto ToDto(Produto produto)
         {
-            return new Produto
-            {
-                ProdutoId = Id,
-                Name = Name!,
-                Price = Price!.Value,
-                StockQuantity = StockQuantity!.Value
-            };
+            return new ProdutoSaidaDto(produto.ProdutoId, produto.Name, produto.Price, produto.StockQuantity);
         }
     }
 }
