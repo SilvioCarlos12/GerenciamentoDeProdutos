@@ -5,7 +5,7 @@ namespace GerenciamentoDeProdutos.Aplicacao.Dtos
 {
     public record ProdutoDto(string? Name, decimal? Price, int? StockQuantity)
     {
-        public virtual Produto ToEntidade()
+        public  Produto ToEntidade()
         {
             return new Produto
             {
@@ -14,6 +14,7 @@ namespace GerenciamentoDeProdutos.Aplicacao.Dtos
                 StockQuantity = StockQuantity!.Value
             };
         }
+
         public void ValidarDados()
         {
             if (string.IsNullOrEmpty(Name))
