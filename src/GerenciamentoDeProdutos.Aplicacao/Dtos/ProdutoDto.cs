@@ -5,7 +5,7 @@ namespace GerenciamentoDeProdutos.Aplicacao.Dtos
 {
     public record ProdutoDto(string? Name, decimal? Price, int? StockQuantity)
     {
-        public  Produto ToEntidade()
+        public Produto ToEntidade()
         {
             return new Produto
             {
@@ -22,12 +22,12 @@ namespace GerenciamentoDeProdutos.Aplicacao.Dtos
                 throw new ExcecaoDadosNaoValidos("O Nome é obrigatório");
             }
 
-            if (Price is null || Price > 0)
+            if (Price is null || Price <= 0)
             {
                 throw new ExcecaoDadosNaoValidos("O Price é obrigatório");
             }
 
-            if (StockQuantity is null || StockQuantity > -1)
+            if (StockQuantity is null || StockQuantity < 0)
             {
                 throw new ExcecaoDadosNaoValidos("O StockQuantity é obrigatório");
             }
