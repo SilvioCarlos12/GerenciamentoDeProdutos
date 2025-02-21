@@ -74,8 +74,8 @@ namespace GerenciamentoDeProdutos.Aplicacao
             {
                 var produtos = await _produtoRepositorio.ObterProdutoPorFiltro(x =>
                  (string.IsNullOrEmpty(produtoDto.Name) || x.Name.Contains(produtoDto.Name)) &&
-                 (produtoDto.Price > 0 || x.Price == produtoDto.Price) &&
-                 (produtoDto.StockQuantity < 0 || x.StockQuantity == produtoDto.StockQuantity), cancellationToken);
+                 (!produtoDto.Price.HasValue || x.Price == produtoDto.Price) &&
+                 (!produtoDto.StockQuantity.HasValue || x.StockQuantity == produtoDto.StockQuantity), cancellationToken);
 
                 return produtos.ConvertAll(ProdutoSaidaDto.ToDto);
             }
